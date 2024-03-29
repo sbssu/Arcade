@@ -201,7 +201,6 @@ namespace Gamekit3D
                 UpdateOrientation();
 
             PlayAudio();
-
             TimeoutToIdle();
 
             m_PreviouslyGrounded = m_IsGrounded;
@@ -473,7 +472,7 @@ namespace Gamekit3D
             if (m_IsGrounded && !inputDetected)
             {
                 m_IdleTimer += Time.deltaTime;
-
+                
                 if (m_IdleTimer >= idleTimeout)
                 {
                     m_IdleTimer = 0f;
