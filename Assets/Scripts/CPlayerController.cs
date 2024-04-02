@@ -16,6 +16,7 @@ public class CPlayerController : Singleton<CPlayerController>
     public float idleTimeout = 5f;          // Idle(유휴)상태 전환 대기 시간
     public bool canAttack;                  // 공격 가능 여부
 
+    public CMeleeWeapon meleeWeapon;                // 근접 무기.
     public CRandomAudioPlayer footstepAudio;        // 걷기 오디오
     public CRandomAudioPlayer hurtAudio;            // 피격 오디오
     public CRandomAudioPlayer landingPlayer;        // 착지 오디오
@@ -73,12 +74,15 @@ public class CPlayerController : Singleton<CPlayerController>
         input = GetComponent<CPlayerInput>();
         animator = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+
+        meleeWeapon.SetOwner(gameObject);
     }
 
     private void FixedUpdate()
     {
-        CacheAnimatorState();       // 이전 애니메이터 상태 캐싱(=저장)
-        UpdateInputBlocking();      // 트리거에 따른 플레이어 입력 상태 막기
+        CacheAnimatorState();                       // 이전 애니메이터 상태 캐싱(=저장)
+        UpdateInputBlocking();                      // 트리거에 따른 플레이어 입력 상태 막기
+        EquipMeleeWeapon(IsWeaponEquiped());        // 무기 장비 여부 체크
 
         // 유휴 대기 시간 갱신
         animator.SetFloat(hashStateTime, Mathf.Repeat(currentStateInfo.normalizedTime, 1f));
@@ -100,6 +104,30 @@ public class CPlayerController : Singleton<CPlayerController>
         TimeoutToIdle();
 
         prevGrounded = isGrounded;                      // 현재 상태값을 이전으로 저장.
+    }
+
+
+    // 애니메이터 상태가 캐싱된 후 호출되어 지팡이가 활성화되어야 하는지 여부를 결정합니다.
+    private bool IsWeaponEquiped()
+    {
+        bool equipped = currentStateInfo.shortNameHash == hashEllenCombo1 || nextStateInfo.shortNameHash == hashEllenCombo1;
+        equipped |= currentStateInfo.shortNameHash == hashEllenCombo2 || nextStateInfo.shortNameHash == hashEllenCombo2;
+        equipped |= currentStateInfo.shortNameHash == hashEllenCombo3 || nextStateInfo.shortNameHash == hashEllenCombo3;
+        equipped |= currentStateInfo.shortNameHash == hashEllenCombo4 || nextStateInfo.shortNameHash == hashEllenCombo4;
+
+        return equipped;
+    }
+
+    // 무기를 장비해야하는지를 체크한다.
+    private void EquipMeleeWeapon(bool isEquip)
+    {
+        meleeWeapon.gameObject.SetActive(isEquip);
+        isAttack = false;
+        isCombo = isEquip;
+
+        // 무기를 장비하지 않으면 MeleeAttack 트리거를 초기화한다.
+        if (!isEquip)
+            animator.ResetTrigger(hashMeleeAttack);
     }
 
     // (root모션 한정) 애니메이션에 의해 캐릭터가 움직이면 호출되는 이벤트 함수.
@@ -141,6 +169,22 @@ public class CPlayerController : Singleton<CPlayerController>
         animator.SetBool(hashGrounded, isGrounded);                         // 지면 체크 파라미터 값 대입.
     }
 
+        
+    // ============================ 공격 관련 함수 ============================
+    
+    // 애니메이션 이벤트로 호출되어 Ellen이 지팡이를 휘두를 때 호출된다.
+    public void MeleeAttackStart(int throwing = 0)
+    {
+        meleeWeapon.BeginAttack(throwing != 0);
+        isAttack = true;
+    }
+
+    // 애니메이션 이벤트로 호출되어 Ellen이 지팡이 휘두르기를 끝낼 때 호출된다.
+    public void MeleeAttackEnd()
+    {
+        meleeWeapon.EndAttack();
+        isAttack = false;
+    }
 
     private void CacheAnimatorState()
     {

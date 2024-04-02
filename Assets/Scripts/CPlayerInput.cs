@@ -35,6 +35,11 @@ public class CPlayerInput : Singleton<CPlayerInput>
     public bool IsPause => isPause;
 
 
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     private void Update()
     {
         moveInput.Set(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));

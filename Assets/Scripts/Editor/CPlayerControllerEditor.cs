@@ -8,7 +8,6 @@ public class CPlayerControllerEditor : Editor
 {
     SerializedProperty scriptProp;
 
-    SerializedProperty cameraSettingsProp;       // 시네머신 카메라.
     SerializedProperty maxForawrdSpeedProp;      // 최대 이동 속도.
     SerializedProperty gravityProp;              // 중력값 (공중에서의 하강 속도)
     SerializedProperty jumpSpeedProp;            // 점프 힘
@@ -16,6 +15,9 @@ public class CPlayerControllerEditor : Editor
     SerializedProperty maxTurnSpeedProp;         // 정지한 상태에서 회전하는 힘
     SerializedProperty idleTimeoutProp;          // Idle(유휴)상태 전환 대기 시간
     SerializedProperty canAttackProp;            // 공격 가능 여부
+
+    SerializedProperty meleeWeaponProp;        // 근접 무기.
+    SerializedProperty cameraSettingsProp;       // 시네머신 카메라.
     SerializedProperty footstepAudioProp;        // 걷기 오디오
     SerializedProperty hurtAudioProp;            // 피격 오디오
     SerializedProperty landingPlayerProp;        // 착지 오디오
@@ -39,6 +41,7 @@ public class CPlayerControllerEditor : Editor
         idleTimeoutProp = serializedObject.FindProperty("idleTimeout");
         canAttackProp = serializedObject.FindProperty("canAttack");
 
+        meleeWeaponProp = serializedObject.FindProperty("meleeWeapon");
         footstepAudioProp = serializedObject.FindProperty("footstepAudio");
         hurtAudioProp = serializedObject.FindProperty("hurtAudio");
         landingPlayerProp = serializedObject.FindProperty("landingPlayer");
@@ -69,10 +72,11 @@ public class CPlayerControllerEditor : Editor
 
         EditorGUILayout.Space();
 
-        scriptProp.isExpanded = EditorGUILayout.Foldout(scriptProp.isExpanded, "Reference");
-        if (scriptProp.isExpanded)
+        meleeWeaponProp.isExpanded = EditorGUILayout.Foldout(meleeWeaponProp.isExpanded, "Reference");
+        if (meleeWeaponProp.isExpanded)
         {
             EditorGUI.indentLevel++;    // 들여쓰기
+            EditorGUILayout.PropertyField(meleeWeaponProp, new GUIContent("melee weapon"));
             EditorGUILayout.PropertyField(cameraSettingsProp, new GUIContent("camera settings"));
             EditorGUILayout.PropertyField(footstepAudioProp, new GUIContent("footstep Audio"));
             EditorGUILayout.PropertyField(hurtAudioProp, new GUIContent("hurt Audio"));

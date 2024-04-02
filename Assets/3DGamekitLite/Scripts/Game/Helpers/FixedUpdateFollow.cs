@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Gamekit3D
 {
+    
     [DefaultExecutionOrder(9999)]
     public class FixedUpdateFollow : MonoBehaviour
     {
