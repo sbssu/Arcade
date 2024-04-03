@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CDamageable : MonoBehaviour
+public class CDamageable : MonoBehaviour, IMessageReceiver
 {
     public struct CDamageMessage
     {
@@ -45,6 +45,7 @@ public class CDamageable : MonoBehaviour
     {
         ResetDamage();
         collider = GetComponent<Collider>();
+        onDamageMessageReceivers = new List<IMessageReceiver>();
     }
 
     // 데미지를 초기화하는 함수.
@@ -139,6 +140,11 @@ public class CDamageable : MonoBehaviour
         UnityEditor.Handles.color = new Color(1.0f, 0.0f, 0.0f, 0.5f);
         forward = Quaternion.AngleAxis(-hitAngle * 0.5f, transform.up) * forward;
         UnityEditor.Handles.DrawSolidArc(transform.position, transform.up, forward, hitAngle, 1.0f);
+    }
+
+    public void OnReceiveMessage(MessageType type, object sender, object msg)
+    {
+        
     }
 #endif
 }
