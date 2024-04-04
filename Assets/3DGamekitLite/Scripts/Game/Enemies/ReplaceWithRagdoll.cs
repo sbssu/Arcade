@@ -11,12 +11,12 @@ namespace Gamekit3D
         public void Replace()
         {
             GameObject ragdollInstance = Instantiate(ragdollPrefab, transform.position, transform.rotation);
-            //need to disable it, otherwise when we copy over the hierarchy objects position/rotation, the ragdoll will try each time to 
-            //"correct" the attached joint, leading to a deformed/glitched instance
+
+            // 복제된 계층 구조의 객체의 위치/회전을 복사할 때 매번 "정정"을 시도하는 랙돌이 변형된/오작동된 인스턴스를 만들게 됩니다.
+            // 따라서 비활성화해야 합니다. 
             ragdollInstance.SetActive(false);
 
             EnemyController baseController = GetComponent<EnemyController>();
-
             RigidbodyDelayedForce t = ragdollInstance.AddComponent<RigidbodyDelayedForce>();
             t.forceToAdd = baseController.externalForce;
 

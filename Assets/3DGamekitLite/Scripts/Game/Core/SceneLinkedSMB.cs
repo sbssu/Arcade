@@ -159,9 +159,9 @@ namespace Gamekit3D
         public virtual void OnSLStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex, AnimatorControllerPlayable controller) { }
     }
 
-    //This class repalce normal StateMachineBehaviour. It add the possibility of having direct reference to the object
-    //the state is running on, avoiding the cost of retrienving it through a GetComponent every time.
-    //c.f. Documentation for more in depth explainations.
+    // 이 클래스는 일반적인 StateMachineBehaviour를 대체합니다.
+    // 이 클래스는 상태가 실행 중인 객체에 직접 참조할 수 있는 기능을 추가하여
+    // 매번 GetComponent를 통해 찾는 비용을 절약할 수 있습니다.
     public abstract class SealedSMB : StateMachineBehaviour
     {
         public sealed override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) { }

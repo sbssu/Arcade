@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 namespace Gamekit3D
 {
-//this assure it's runned before any behaviour that may use it, as the animator need to be fecthed
+    //this assure it's runned before any behaviour that may use it, as the animator need to be fecthed
     [DefaultExecutionOrder(-1)]
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyController : MonoBehaviour
@@ -111,6 +111,7 @@ namespace Gamekit3D
         }
 
         // used to disable position being set by the navmesh agent, for case where we want the animation to move the enemy instead (e.g. Chomper attack)
+        // 네브메시 에이전트에 의해 위치가 설정되는 것을 비활성화하는 데 사용됩니다. 애니메이션으로 적을 이동시키는 경우에 사용됩니다 (예: Chomper 공격).
         public void SetFollowNavmeshAgent(bool follow)
         {
             if (!follow && m_NavMeshAgent.enabled)

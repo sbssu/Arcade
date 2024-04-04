@@ -16,21 +16,21 @@ namespace Gamekit3D
         public static readonly int hashVerticalVelocity = Animator.StringToHash("VerticalVelocity");
         public static readonly int hashSpotted = Animator.StringToHash("Spotted");
         public static readonly int hashNearBase = Animator.StringToHash("NearBase");
-
         public static readonly int hashIdleState = Animator.StringToHash("ChomperIdle");
 
         public EnemyController controller { get { return m_Controller; } }
-
         public PlayerController target { get { return m_Target; } }
         public TargetDistributor.TargetFollower followerData { get { return m_FollowerInstance; } }
 
         public Vector3 originalPosition { get; protected set; }
+       
         [System.NonSerialized]
         public float attackDistance = 3;
 
         public MeleeWeapon meleeWeapon;
         public TargetScanner playerScanner;
-        [Tooltip("Time in seconde before the Chomper stop pursuing the player when the player is out of sight")]
+
+        [Tooltip("플레이어가 시야에서 사라질 때 Chomper가 플레이어를 추격하는 것을 멈추는 시간(초)")]
         public float timeToStopPursuit;
 
         [Header("Audio")]
@@ -64,13 +64,13 @@ namespace Gamekit3D
         /// <summary>
         /// Called by animation events.
         /// </summary>
-        /// <param name="frontFoot">Has a value of 1 when it's a front foot stepping and 0 when it's a back foot.</param>
+        /// <param name="frontFoot">앞발이 밟힐 때는 1의 값을 가지고, 뒷발이 밟힐 때는 0의 값을 가집니다.</param>
         void PlayStep(int frontFoot)
         {
             if (frontStepAudio != null && frontFoot == 1)
                 frontStepAudio.PlayRandomClip();
             else if (backStepAudio != null && frontFoot == 0)
-                backStepAudio.PlayRandomClip ();
+                backStepAudio.PlayRandomClip();
         }
 
         /// <summary>

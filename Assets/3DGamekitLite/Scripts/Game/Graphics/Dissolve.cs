@@ -18,14 +18,12 @@ namespace Gamekit3D
         float m_StartTime;
         float m_EndTime;
 
-        const string k_CutoffName = "_Cutoff";
+        const string k_CutoffName = "_Dissolve";
 
         void Awake()
         {
-
             m_PropertyBlock = new MaterialPropertyBlock();
             m_Renderer = GetComponentsInChildren<Renderer>();
-
             m_ParticleSystem = GetComponentInChildren<ParticleSystem>();
 
             m_Emission = m_ParticleSystem.emission;

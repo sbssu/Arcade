@@ -4,20 +4,18 @@ using UnityEngine;
 
 namespace Gamekit3D
 {
-    // This class allow to distribute arc around a target, used for "crowding" by ennemis, so they all
-    // come at the player (or any target) from different direction.
+    // 이 클래스는 "crowding"을 위해 적들이 플레이어(또는 다른 대상)에게 다양한 방향에서 접근하도록
+    // 타겟 주위에 호를 분배하는 기능을 제공합니다.
+
     [DefaultExecutionOrder(-1)]
     public class TargetDistributor : MonoBehaviour
     {
-        //Use as a mean to communicate between this target and the followers
+        // Use as a mean to communicate between this target and the followers        
         public class TargetFollower
         {
-            //target should set that to true when they require the system to give them a position
-            public bool requireSlot;
-            //will be -1 if none is currently assigned
-            public int assignedSlot;
-            //the position the follower want to reach for the target.
-            public Vector3 requiredPoint;
+            public bool requireSlot;        // 타겟이 시스템에게 위치를 제공해야 할 때 이 값을 true로 설정해야 합니다
+            public int assignedSlot;        // 할당된 슬롯. (없으면 -1)
+            public Vector3 requiredPoint;   // 타겟이 원하는 위치.
 
             public TargetDistributor distributor;
 
@@ -30,20 +28,18 @@ namespace Gamekit3D
             }
         }
 
-        public int arcsCount;
+        public int arcsCount;                   // 호의 개수 (최대 등분 수)
+        protected Vector3[] m_WorldDirection;   // 개수에 따른 월드 방향.
 
-        protected Vector3[] m_WorldDirection;
+        protected bool[] m_FreeArcs;            // index번째 호가 사용 가능한지 여부.
+        protected float arcDegree;              // 호의 각도.
 
-        protected bool[] m_FreeArcs;
-        protected float arcDegree;
-
-        protected List<TargetFollower> m_Followers;
+        protected List<TargetFollower> m_Followers;     // 나를 공격하러 오는 객체.
 
         public void OnEnable()
         {
             m_WorldDirection = new Vector3[arcsCount];
             m_FreeArcs = new bool[arcsCount];
-
             m_Followers = new List<TargetFollower>();
 
             arcDegree = 360.0f / arcsCount;
@@ -71,16 +67,16 @@ namespace Gamekit3D
                 m_FreeArcs[follower.assignedSlot] = true;
             }
 
-
             m_Followers.Remove(follower);
         }
 
-        //at the end of the frame, we distribute target position to all follower that asked for one.
+        // at the end of the frame, we distribute target position to all follower that asked for one.
+        // 프레임의 끝에서, 우리는 타겟 위치를 요청한 모든 팔로워에게 분배합니다.
         private void LateUpdate()
         {
             for (int i = 0; i < m_Followers.Count; ++i)
             {
-                var follower = m_Followers[i];
+                TargetFollower follower = m_Followers[i];
 
                 //we free whatever arc this follower may already have. 
                 //If it still need it, it will be picked again next lines.
