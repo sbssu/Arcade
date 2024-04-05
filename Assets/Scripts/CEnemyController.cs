@@ -23,6 +23,8 @@ public class CEnemyController : MonoBehaviour
     protected Vector3 externalForce;                // 외부 힘.
     protected bool grounded;                        // 땅에 붙어있는지 여부.
 
+    public bool IsGrounded => grounded;             // 땅에 붙어있는지 여부 반환.
+
     private void OnEnable()
     {
         // 컴포넌트 캐싱.
@@ -52,6 +54,9 @@ public class CEnemyController : MonoBehaviour
     {
         // 플레이어의 조작이 멈추면 애니메이션 속도를 0으로 한다. (=freeze)
         anim.speed = CPlayerInput.Instance != null && CPlayerInput.Instance.isLockControl ? 1.0f : 0.0f;   // 애니메이션 속도 설정.
+        CheckGrounded();
+        if (underExternalForce)
+            ForceMovement();
     }
 
     // 땅에 붙어있는지 체크하는 함수.

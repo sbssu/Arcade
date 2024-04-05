@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-198993929031765711
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0c3dee2d0baf43b8569460b62fb74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumIdleGruntTime: 2
+  maximumIdleGruntTime: 5
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -154,20 +168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f284183bdd6ce64fb1c1a690525d9ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114682995186634770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e8357f665d26c94eaf3f12590cbb951, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minimumIdleGruntTime: 2
-  maximumIdleGruntTime: 5
 --- !u!114 &114742386792202330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1079,7 +1079,7 @@ AnimatorState:
   - {fileID: 1101513761486130628}
   - {fileID: 1101310496760307858}
   m_StateMachineBehaviours:
-  - {fileID: 114682995186634770}
+  - {fileID: -198993929031765711}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

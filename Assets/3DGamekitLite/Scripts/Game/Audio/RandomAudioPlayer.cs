@@ -72,11 +72,13 @@ namespace Gamekit3D
         /// </summary>
         public void PlayRandomClip()
         {
+            Debug.Log("PlayRandomClip()");
             clip = InternalPlayRandomClip(null, bankId: 0);
         }
 
         AudioClip InternalPlayRandomClip(Material overrideMaterial, int bankId)
         {
+            Debug.Log("InternalPlayRandomClip()");
             SoundBank[] banks = null;
             var bank = defaultBank;
             if (overrideMaterial != null)

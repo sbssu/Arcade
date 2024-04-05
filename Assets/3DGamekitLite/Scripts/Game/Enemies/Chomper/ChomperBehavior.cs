@@ -81,7 +81,6 @@ namespace Gamekit3D
             if (gruntAudio != null)
                 gruntAudio.PlayRandomClip ();
         }
-
         public void Spotted()
         {
             if (spottedAudio != null)
